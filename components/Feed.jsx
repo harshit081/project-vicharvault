@@ -58,7 +58,7 @@ const Feed = () => {
     };
     fetchPosts();
 
-  }, [])
+  }, [posts])
 
   const handleTagClick = (tagName) => {
     setSearchText(tagName);
