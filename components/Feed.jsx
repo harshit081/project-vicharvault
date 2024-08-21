@@ -3,8 +3,6 @@
 import { useState, useEffect } from 'react'
 import { GetServerSideProps } from 'next';
 import PromptCard from './PromptCard'
-import { useSession } from 'next-auth/react'
-
 const PromptCardList = ({ data, handleTagClick }) => {
   return (
     <div className="mt-16 prompt_layout">
@@ -28,7 +26,6 @@ const Feed = () => {
   const [searchText, setSearchText] = useState('');
   const [searchTimeout, setSearchTimeout] = useState(null);
   const [searchedResults, setSearchedResults] = useState([])
-  const {data:session} = useSession()
 
   const filterPrompts = (searchtext) => {
     const regex = new RegExp(searchtext, "i"); // 'i' flag for case-insensitive search
@@ -52,14 +49,13 @@ const Feed = () => {
     );
   }
 
-  useEffect(() => {
     const fetchPosts = async () => {
       const response = await fetch('/api/prompt');
       const data = await response.json();
       setPosts(data);
     };
+  useEffect(() => {
     fetchPosts();
-
   }, [])
 
   const handleTagClick = (tagName) => {
