@@ -1,8 +1,9 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-
+import { GetServerSideProps } from 'next';
 import PromptCard from './PromptCard'
+import { useSession } from 'next-auth/react'
 
 const PromptCardList = ({ data, handleTagClick }) => {
   return (
@@ -27,6 +28,7 @@ const Feed = () => {
   const [searchText, setSearchText] = useState('');
   const [searchTimeout, setSearchTimeout] = useState(null);
   const [searchedResults, setSearchedResults] = useState([])
+  const {data:session} = useSession()
 
   const filterPrompts = (searchtext) => {
     const regex = new RegExp(searchtext, "i"); // 'i' flag for case-insensitive search
@@ -58,7 +60,7 @@ const Feed = () => {
     };
     fetchPosts();
 
-  }, [posts])
+  }, [])
 
   const handleTagClick = (tagName) => {
     setSearchText(tagName);
@@ -97,4 +99,13 @@ const Feed = () => {
   )
 }
 
-export default Feed
+export const getServerSideProps = async () => {
+  const response = await fetch('/api/prompt');
+  const data = await response.json();
+  return {
+    props: {
+      posts: data,
+    },
+    revalidate: 1, // revalidate every 1 second
+  };
+};
