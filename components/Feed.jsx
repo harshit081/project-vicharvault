@@ -39,8 +39,7 @@ const Feed = () => {
   const handleSearchChange = (e) => {
     clearTimeout(searchTimeout)
     setSearchText(e.target.value)
-    refresh=!refresh
-    setRefresh(refresh)
+    setRefresh(refresh?false:true)
 
     setSearchTimeout(
       setTimeout(() => {
