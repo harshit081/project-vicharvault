@@ -1,7 +1,6 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { GetServerSideProps } from 'next';
 import PromptCard from './PromptCard'
 const PromptCardList = ({ data, handleTagClick }) => {
   return (
@@ -94,14 +93,4 @@ const Feed = () => {
     </section>
   )
 }
-
-export const getServerSideProps = async () => {
-  const response = await fetch('/api/prompt');
-  const data = await response.json();
-  return {
-    props: {
-      posts: data,
-    },
-    revalidate: 1, // revalidate every 1 second
-  };
-};
+export default Feed;
