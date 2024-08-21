@@ -25,7 +25,7 @@ const Feed = () => {
   const [searchText, setSearchText] = useState('');
   const [searchTimeout, setSearchTimeout] = useState(null);
   const [searchedResults, setSearchedResults] = useState([])
-
+  const [refresh,setRefresh] = useState(true)
   const filterPrompts = (searchtext) => {
     const regex = new RegExp(searchtext, "i"); // 'i' flag for case-insensitive search
     return posts.filter(
@@ -37,6 +37,7 @@ const Feed = () => {
   };
 
   const handleSearchChange = (e) => {
+    setRefresh(!refresh)
     clearTimeout(searchTimeout)
     setSearchText(e.target.value)
 
@@ -55,7 +56,7 @@ const Feed = () => {
     };
   useEffect(() => {
     fetchPosts();
-  }, [])
+  }, [refresh])
 
   const handleTagClick = (tagName) => {
     setSearchText(tagName);
