@@ -35,7 +35,8 @@ const Feed = () => {
 
   useEffect(() => {
     fetchPosts();
-    
+    const intervalId = setInterval(fetchPosts, 2000); // refresh every 2 seconds
+    return () => clearInterval(intervalId);
   }, []);
 
   const filterPrompts = (searchtext) => {
