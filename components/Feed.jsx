@@ -29,14 +29,15 @@ const Feed = () => {
   const fetchPosts = async () => {
     const response = await fetch("/api/prompt");
     const data = await response.json();
-
+    console.log("1")
+    console.log(data)
     setAllPosts(data);
   };
 
   useEffect(() => {
     fetchPosts();
-    const intervalId = setInterval(fetchPosts, 2000); // refresh every 2 seconds
-    return () => clearInterval(intervalId);
+    // const intervalId = setInterval(fetchPosts, 2000); // refresh every 2 seconds
+    // return () => clearInterval(intervalId);
   }, []);
 
   const filterPrompts = (searchtext) => {
