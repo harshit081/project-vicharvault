@@ -45,7 +45,8 @@ const Feed = () => {
       headers:{
         "Content-Type": "application/json"
       },
-      cache:"no-cache"
+      cache:"no-cache",
+      mode: "no-cors", 
     });
     const data = await response.json();
     console.log("1")
