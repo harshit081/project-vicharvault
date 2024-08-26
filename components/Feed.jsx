@@ -26,8 +26,27 @@ const Feed = () => {
   const [searchTimeout, setSearchTimeout] = useState(null);
   const [searchedResults, setSearchedResults] = useState([]);
 
+
+  // const response = await fetch(`${process.env.BACKEND_URL}/api/cos/updateFeedback`, {
+  //   method: "GET",
+  //   mode: "cors",
+  //   headers: {
+  //     "Content-Type": "application/json",
+  //     orderid: orderid,
+  //     rating: rating.toString(),
+  //     feedback: feedback
+  //   },
+  //   cache: "no-cache",
+  // });
+  
   const fetchPosts = async () => {
-    const response = await fetch("/api/prompt");
+    const response = await fetch("/api/prompt",{
+      method: "GET",
+      headers:{
+        "Content-Type": "application/json"
+      },
+      cache:"no-cache"
+    });
     const data = await response.json();
     console.log("1")
     console.log(data)
