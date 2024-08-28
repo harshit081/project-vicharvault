@@ -92,7 +92,7 @@ const Feed = () => {
 
   return (
     <section className='feed'>
-      <button onClick={fetchPosts}>Refresh</button>
+      {/* <button onClick={fetchPosts}>Refresh</button> */}
       <form className='relative w-full flex-center'>
         <input
           type='text'
