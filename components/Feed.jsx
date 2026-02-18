@@ -89,7 +89,6 @@ const Feed = () => {
 
   return (
     <section className='feed'>
-      <button onClick={fetchPosts}>Refresh</button>
       <form className='relative w-full flex-center'>
         <input
           type='text'
@@ -99,6 +98,15 @@ const Feed = () => {
           required
           className='search_input peer'
         />
+        <button
+          type='button'
+          onClick={fetchPosts}
+          aria-label='Refresh prompts'
+          title='Refresh prompts'
+          className='absolute right-3 top-1/2 -translate-y-1/2 text-lg text-gray-600 hover:text-black transition-colors'
+        >
+          ↻
+        </button>
       </form>
 
       {/* All Prompts */}
