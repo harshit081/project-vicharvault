@@ -4,7 +4,7 @@ import GoogleProvider from "next-auth/providers/google";
 import User from "@models/user";
 import { connectToDB } from "@utils/database";
 
-const handler = NextAuth({
+export const authOptions = {
   providers: [
     GoogleProvider({
       clientId: process.env.GOOGLE_ID,
@@ -13,10 +13,15 @@ const handler = NextAuth({
   ],
   callbacks: {
     async session({ session }) {
+      await connectToDB();
       const sessionUser = await User.findOne({
         email: session.user.email,
       });
-      session.user.id = sessionUser._id.toString();
+
+      if (sessionUser?._id) {
+        session.user.id = sessionUser._id.toString();
+      }
+
       return session;
     },
     async signIn({ profile }) {
@@ -41,6 +46,8 @@ const handler = NextAuth({
       }
     },
   },
-});
+};
+
+const handler = NextAuth(authOptions);
 
 export { handler as GET, handler as POST };

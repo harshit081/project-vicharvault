@@ -1,5 +1,7 @@
 import { connectToDB } from "@utils/database";
 import Prompt from '@models/prompt'
+import { getServerSession } from "next-auth";
+import { authOptions } from "@app/api/auth/[...nextauth]/route";
 
 //GET
 export const GET = async (request, {params})=>{
@@ -37,7 +39,23 @@ try {
 //DELETE
 export const DELETE = async (request ,{params})=>{
     try {
+        const session = await getServerSession(authOptions);
+
+        if (!session?.user?.id) {
+            return new Response("Unauthorized", { status: 401 });
+        }
+
         await connectToDB();
+
+        const prompt = await Prompt.findById(params.id);
+
+        if (!prompt) {
+            return new Response("Prompt not found", { status: 404 });
+        }
+
+        if (prompt.creator.toString() !== session.user.id) {
+            return new Response("Forbidden", { status: 403 });
+        }
 
         await Prompt.findByIdAndDelete(params.id);
 

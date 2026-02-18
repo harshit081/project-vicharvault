@@ -36,9 +36,13 @@ const MyProfile = () => {
 
     if (hasConfirmed){
       try {
-        await fetch(`api/prompt/${post._id.toString()}`,{
+        const response = await fetch(`/api/prompt/${post._id.toString()}`,{
           method:"DELETE"
         });
+
+        if (!response.ok) {
+          throw new Error("Failed to delete prompt");
+        }
 
         const filteredPosts= posts.filter((p)=>p._id !== post._id)
 
