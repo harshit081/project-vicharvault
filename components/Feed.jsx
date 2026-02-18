@@ -45,12 +45,9 @@ const Feed = () => {
       headers:{
         "Content-Type": "application/json"
       },
-      cache:"no-cache",
-      mode: "no-cors", 
+      cache:"no-store",
     });
     const data = await response.json();
-    console.log("1")
-    console.log(data)
     setAllPosts(data);
   };
 
